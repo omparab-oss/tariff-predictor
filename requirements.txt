@@ -1,0 +1,11 @@
+# Python ML stack for Carrier Pay model
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.4.2
+joblib==1.4.2
+xgboost==2.0.3
+jupyter==1.0.0
+streamlit==1.36.0
+Pillow==10.3.0
+requests==2.32.3
+streamlit-searchbox

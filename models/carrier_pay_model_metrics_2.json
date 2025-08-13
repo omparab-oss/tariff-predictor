@@ -1,0 +1,7 @@
+{
+  "best_base_model": "xgb",
+  "tuned": true,
+  "best_cv_rmse": 242.64765516962385,
+  "final_rmse": 242.64765516962385,
+  "final_r2": 0.7557424186834177
+}

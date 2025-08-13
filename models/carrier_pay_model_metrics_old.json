@@ -1,0 +1,7 @@
+{
+  "best_base_model": "linreg",
+  "tuned": false,
+  "best_cv_rmse": 53.662979645326956,
+  "final_rmse": 53.662979645326956,
+  "final_r2": 0.9880709703315377
+}
