@@ -309,12 +309,24 @@ with left:
         # 3) Vehicle management: add one-by-one with Inop flag, build model input tokens
         vt_vocab = options.get("vehicle_types", options.get("Vehicle_Types", []))
         vt_vocab = [str(v).strip() for v in (vt_vocab or []) if str(v).strip()]
-        def _base_from_token(tok: str) -> str:
+        def _normalize_base(tok: str) -> str:
             t = str(tok).lower().strip()
-            t = re.sub(r"\s*\(.*?\)\s*", " ", t)
-            t = re.sub(r"\b(inop|op)\b", "", t)
+            t = re.sub(r"\s*\(.*?\)\s*", " ", t)  # remove parenthetical flags
+            t = re.sub(r"\b(inop|op)\b", "", t)     # remove op/inop words
+            t = t.replace("/", " ")                    # normalize separators
+            t = t.replace("-", " ")
             return " ".join(t.split())
-        base_types = sorted(set(_base_from_token(t) for t in vt_vocab)) or ["sedan","suv","pickup","van"]
+        base_set = set()
+        for raw in vt_vocab:
+            parts = [p.strip() for p in str(raw).split(",") if p.strip()]
+            for p in parts:
+                n = _normalize_base(p)
+                if n:
+                    base_set.add(n)
+        if not base_set:
+            base_set = {"sedan", "suv", "pickup", "van"}
+        # Title case for display; mapping to model remains case-insensitive
+        base_types = sorted({b.title() for b in base_set})
         if 'vehicles' not in st.session_state:
             st.session_state['vehicles'] = []
 
